@@ -2,13 +2,18 @@
 import React, { useEffect, useState } from 'react'
 import UploadForm from './_components/UploadForm'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { app } from '@/firebaseconfig';
+import { analytics, app } from '@/firebaseconfig';
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { useUser } from '@clerk/nextjs';
 import GenerateRandomString from '../_utils/GenerateRandomString';
 import { useRouter } from 'next/navigation';
 
 function Dashboard() {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("Firebase analytics initialized:", analytics);
+    }
+  }, []);
 
   const {user} = useUser();
   const [progress,setProgress]=useState();
